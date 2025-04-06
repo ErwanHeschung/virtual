@@ -1,0 +1,60 @@
+{
+    "CreatureBehavior": {
+        "checkpoints": [
+            {
+                "steps": 499948,
+                "file_path": "results\\Creature\\CreatureBehavior\\CreatureBehavior-499948.onnx",
+                "reward": 61.13893702200481,
+                "creation_time": 1743938616.4749558,
+                "auxillary_file_paths": [
+                    "results\\Creature\\CreatureBehavior\\CreatureBehavior-499948.pt"
+                ]
+            },
+            {
+                "steps": 666953,
+                "file_path": "results\\Creature\\CreatureBehavior\\CreatureBehavior-666953.onnx",
+                "reward": 70.20274800896249,
+                "creation_time": 1743939094.3463092,
+                "auxillary_file_paths": [
+                    "results\\Creature\\CreatureBehavior\\CreatureBehavior-666953.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 666953,
+            "file_path": "results\\Creature\\CreatureBehavior.onnx",
+            "reward": 70.20274800896249,
+            "creation_time": 1743939094.3463092,
+            "auxillary_file_paths": [
+                "results\\Creature\\CreatureBehavior\\CreatureBehavior-666953.pt"
+            ]
+        }
+    },
+    "My Behavior": {
+        "checkpoints": [
+            {
+                "steps": 285696,
+                "file_path": "results\\Creature\\My Behavior\\My Behavior-285696.onnx",
+                "reward": null,
+                "creation_time": 1743939094.0338397,
+                "auxillary_file_paths": [
+                    "results\\Creature\\My Behavior\\My Behavior-285696.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 285696,
+            "file_path": "results\\Creature\\My Behavior.onnx",
+            "reward": null,
+            "creation_time": 1743939094.0338397,
+            "auxillary_file_paths": [
+                "results\\Creature\\My Behavior\\My Behavior-285696.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.6.0+cpu"
+    }
+}
