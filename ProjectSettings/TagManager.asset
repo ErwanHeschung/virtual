@@ -4,26 +4,27 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Food
-  - Wall
-  - Obstacle
-  - Agent
+  - waypoint
+  - TrafficAI
   - Tree
+  - Obstacle
+  - Wall
+  - Food
   - Creature
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - ground
+  - 
   - Water
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - RCC
+  - RCC_WheelCollider
+  - RCC_DetachablePart
+  - RCC_Trailer
+  - RCC_Crasher
   - 
   - 
   - 
@@ -46,7 +47,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Modal
-    uniqueID: 1974866995
     locked: 0

@@ -244,7 +244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -141, y: 161}
+  m_AnchoredPosition: {x: -140.99994, y: 161}
   m_SizeDelta: {x: -472.328, y: 39.601}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &91047229
@@ -2067,7 +2067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rocket: {fileID: 2064900838}
   UI: {fileID: 227720940}
-  targetScene: Race
+  targetScene: GamePlay
   planetName: Arena of speed
 --- !u!135 &1796730992
 SphereCollider:

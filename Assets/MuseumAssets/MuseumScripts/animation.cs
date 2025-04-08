@@ -23,7 +23,7 @@ public class animation : MonoBehaviour
         // Check if the player is moving
         bool isMoving = horizontalInput != 0 || verticalInput != 0;
         BoxCollider collider = GetComponentInParent<BoxCollider>();
-        Movement movement = GetComponentInParent<Movement>();
+        PlayerMovement movement = GetComponentInParent<PlayerMovement>();
         // Set the Animator parameter
         if (movement.isGrounded)
         {
