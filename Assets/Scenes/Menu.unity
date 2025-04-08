@@ -1526,7 +1526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rocket: {fileID: 2064900838}
   UI: {fileID: 227720940}
-  targetScene: Game
+  targetScene: Museum
   planetName: Museum
 --- !u!135 &1024874721
 SphereCollider:
@@ -2067,7 +2067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rocket: {fileID: 2064900838}
   UI: {fileID: 227720940}
-  targetScene: Game
+  targetScene: Race
   planetName: Arena of speed
 --- !u!135 &1796730992
 SphereCollider:

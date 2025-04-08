@@ -11,6 +11,8 @@ public class MissionPanelBehavior : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         panel = gameObject;
 
         HidePanel();
