@@ -102,6 +102,7 @@ public class RCC_CarControllerV3 : RCC_Core {
 
     #region AI
     public bool externalController = false;     // AI Controller.
+    public float aiSpeedMultiplier = 100f;   // Multiplier for AI speed (set > 1 for faster acceleration)
     #endregion
 
     #region Steering
@@ -136,7 +137,7 @@ public class RCC_CarControllerV3 : RCC_Core {
     public float brakeTorque = 2000f;                                   // Maximum brake torque.,
     public float downForce = 25f;                                       // Applies downforce related with vehicle speed.
     public float speed = 0f;                                                    // Vehicle speed in km/h or mp/h.
-    public float maxspeed = 240f;                                       // Top speed.
+    public float maxspeed = 6000f;                                       // Top speed.
     private float resetTime = 0f;                                           // Used for resetting the vehicle if upside down.
 
     #endregion
@@ -1392,9 +1393,18 @@ public class RCC_CarControllerV3 : RCC_Core {
     private void Wheels() {
 
         for (int i = 0; i < allWheelColliders.Length; i++) {
-
             if (allWheelColliders[i].canPower)
-                allWheelColliders[i].ApplyMotorTorque((direction * allWheelColliders[i].powerMultiplier * (1f - clutchInput) * throttleInput * (1f + boostInput) * (engineTorqueCurve.Evaluate(engineRPM) * gears[currentGear].maxRatio * finalRatio)) / Mathf.Clamp(poweredWheels, 1, Mathf.Infinity));
+            {
+                // Calculate the base motor torque.
+                float motorTorque = (direction * allWheelColliders[i].powerMultiplier * (1f - clutchInput) * throttleInput *
+                                     (1f + boostInput) * (engineTorqueCurve.Evaluate(engineRPM) * gears[currentGear].maxRatio * finalRatio))
+                                    / Mathf.Clamp(poweredWheels, 1, Mathf.Infinity);
+                // Apply the AI speed multiplier.
+                motorTorque *= aiSpeedMultiplier;
+
+                // Feed the modified torque to the wheel collider.
+                allWheelColliders[i].ApplyMotorTorque(motorTorque);
+            }
 
             if (allWheelColliders[i].canSteer)
                 allWheelColliders[i].ApplySteering(steerInput * allWheelColliders[i].steeringMultiplier, steerAngle);

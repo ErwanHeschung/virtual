@@ -24,6 +24,8 @@ public class RaceStartController : MonoBehaviour
         foreach (var ai in AIShips)
         {
             ai.enabled = false;
+            ai.maximumSpeed = 1000;
+            // Set maximum speed to 0 to prevent movement
         }
 
         timerText.text = timer.ToString();
