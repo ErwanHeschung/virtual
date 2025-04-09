@@ -25,6 +25,14 @@ public class SpaceshipMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody component is missing on the spaceship.");
+        }
+        else
+        {
+            Debug.Log("Rigidbody component initialized.");
+        }
         rb.useGravity = true;
     }
 
@@ -38,6 +46,8 @@ public class SpaceshipMovement : MonoBehaviour
         // Get input for movement (W, S, A, D or arrow keys)
         float moveForward = Input.GetAxis("Vertical");  // Forward and backward (W/S or Up/Down arrow)
         float moveSide = Input.GetAxis("Horizontal");   // Left and right (A/D or Left/Right arrow)
+
+        Debug.Log("Move Forward: " + moveForward + ", Move Side: " + moveSide);
 
         // Determine whether the ship should accelerate or decelerate
         if (moveForward > 0)  // Moving forward
@@ -136,16 +146,20 @@ public class SpaceshipMovement : MonoBehaviour
     // Detect collisions and stop rotation if collision occurs
     private void OnCollisionStay(Collision collision)
     {
-        // When a collision is detected, prevent further rotation
-        isColliding = true;
+        if (collision == null)
+        {
+            Debug.LogError("Collision object is null.");
+            return;
+        }
 
-        // Optionally, freeze angular velocity completely while colliding
+        isColliding = true;
         rb.angularVelocity = Vector3.zero;  // Ensure no further rotation
+        Debug.Log("Collision detected with: " + collision.gameObject.name);
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        // Reset the collision status when no longer colliding
         isColliding = false;
+        Debug.Log("Collision exited with: " + collision.gameObject.name);
     }
 }
