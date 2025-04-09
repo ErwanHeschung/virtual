@@ -2661,6 +2661,8 @@ MonoBehaviour:
   - '"Guard: The king will kill us if we don''t have someone to race and win."'
   dialogueText: {fileID: 344205320}
   dialogueBox: {fileID: 968975590}
+  indicatorPrefab: {fileID: 8534267226360346820, guid: fc599a81a90f8184784f44ab5a9ec26b,
+    type: 3}
 --- !u!4 &215833945
 Transform:
   m_ObjectHideFlags: 0
@@ -11542,7 +11544,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -20860,6 +20862,7 @@ MonoBehaviour:
   handbrakeInput: 0
   limitSpeed: 0
   maximumSpeed: 50
+  speedMultiplier: 5
   smoothedSteer: 1
   lap: 0
   stopLap: 2
@@ -20920,6 +20923,7 @@ MonoBehaviour:
   steeringWheelAngleMultiplier: 11
   wheelTypeChoise: 0
   externalController: 0
+  aiSpeedMultiplier: 100
   steeringType: 0
   steerAngleCurve:
     serializedVersion: 2
@@ -42566,6 +42570,7 @@ MonoBehaviour:
   handbrakeInput: 0
   limitSpeed: 0
   maximumSpeed: 50
+  speedMultiplier: 5
   smoothedSteer: 1
   lap: 0
   stopLap: 2
@@ -42626,6 +42631,7 @@ MonoBehaviour:
   steeringWheelAngleMultiplier: 11
   wheelTypeChoise: 0
   externalController: 0
+  aiSpeedMultiplier: 100
   steeringType: 0
   steerAngleCurve:
     serializedVersion: 2
