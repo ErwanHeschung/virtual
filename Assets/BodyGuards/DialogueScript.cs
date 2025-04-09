@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro; // Import the TextMeshPro namespace
+using UnityEngine;
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -12,35 +12,42 @@ public class DialogueSystem : MonoBehaviour
     private int dialogueIndex = 0;
     private bool inConversation = false;
 
+    private GameObject currentIndicator;
+    private Canvas canvas;
+    public GameObject indicatorPrefab;
+
     void Start()
     {
-        // Ensure the dialogue box is inactive at the start
+        canvas = FindObjectOfType<Canvas>();
+
+        currentIndicator = Instantiate(indicatorPrefab, canvas.transform);
+        currentIndicator.SetActive(false);
+        TextMeshProUGUI text = currentIndicator.GetComponentInChildren<TextMeshProUGUI>();
         if (dialogueBox != null)
-        {
             dialogueBox.SetActive(false);
-        }
-        else
-        {
-            Debug.LogError("DialogueBox is not assigned.");
-        }
+        text.text = "Press 'E' to Talk";
     }
 
     void Update()
     {
         if (!inConversation && Vector3.Distance(player.transform.position, guard.transform.position) <= interactionRange)
         {
-            Debug.Log("In range to interact with guard.");
-            if (Input.GetKeyDown(KeyCode.E)) // Use 'E' key to interact
+            currentIndicator.SetActive(true);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(guard.transform.position);
+            currentIndicator.transform.position = screenPos;
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("E key pressed. Starting conversation.");
                 StartConversation();
             }
         }
-
-        if (inConversation && Input.GetKeyDown(KeyCode.E)) // Use 'E' key to advance dialogue
+        else if (inConversation && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space)))
         {
-            Debug.Log("E key pressed. Displaying next line.");
             DisplayNextLine();
+        }
+        else
+        {
+            currentIndicator.SetActive(false);
         }
     }
 
@@ -51,7 +58,7 @@ public class DialogueSystem : MonoBehaviour
         dialogueIndex = 0;
         if (dialogueBox != null)
         {
-            dialogueBox.SetActive(true); // Show the dialogue box
+            dialogueBox.SetActive(true);
         }
         else
         {
@@ -67,7 +74,7 @@ public class DialogueSystem : MonoBehaviour
             Debug.Log("Displaying dialogue line: " + dialogueLines[dialogueIndex]);
             if (dialogueText != null)
             {
-                dialogueText.text = dialogueLines[dialogueIndex]; // Update the TextMeshPro UI Text element
+                dialogueText.text = dialogueLines[dialogueIndex];
             }
             else
             {
@@ -86,11 +93,11 @@ public class DialogueSystem : MonoBehaviour
         inConversation = false;
         if (dialogueText != null)
         {
-            dialogueText.text = ""; // Clear the dialogue text
+            dialogueText.text = "";
         }
         if (dialogueBox != null)
         {
-            dialogueBox.SetActive(false); // Hide the dialogue box
+            dialogueBox.SetActive(false);
         }
     }
 }
