@@ -1,71 +1,31 @@
-using UnityEngine;
-using TMPro;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameRule : MonoBehaviour
 {
-    public TMP_Text evolutionStageText;
-    public TMP_Text targetStageText;
-    public TMP_Text countdownText;
+    public TMP_Text currentFitnessText;
     public TMP_Text congratsText;
 
-    private float timeRemaining = 300f;
-    private int evolutionStage = 1;
-    private int targetStage = 5;
-    private bool reachedTarget = false;
+    private float fitness = 0f;
 
     void Start()
     {
-        targetStageText.text = "Target Stage: " + targetStage;
-        UpdateEvolutionStage();
+        currentFitnessText.text = "Current Fitness: " + fitness;
     }
 
     void Update()
     {
-        if (reachedTarget) return;
-
-        UpdateTimer();
-
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && evolutionStage < targetStage)
-        {
-            evolutionStage++;
-            UpdateEvolutionStage();
-        }*/
-
-        if (evolutionStage >= targetStage)
-        {
-            reachedTarget = true;
-            StartCoroutine(HandleSuccess());
-        }
+        UpdateFitness();
     }
 
-    void UpdateTimer()
+    public void UpdateFitness()
     {
-        if (timeRemaining > 0)
-        {
-            timeRemaining -= Time.deltaTime;
-            int minutes = Mathf.FloorToInt(timeRemaining / 60f);
-            int seconds = Mathf.FloorToInt(timeRemaining % 60f);
-            countdownText.text = $"{minutes:00}:{seconds:00}";
-        }
-        else
-        {
-            congratsText.text = "Time's Up!";
-        }
+        fitness = EvolutionManager.Instance.bestFitness;
+        currentFitnessText.text = "Current Fitness: " + fitness;
     }
 
-    void UpdateEvolutionStage()
-    {
-        evolutionStageText.text = "Evolution Stage: " + evolutionStage;
-    }
 
-    IEnumerator HandleSuccess()
-    {
-        congratsText.text = "Congrats! You reached the glorious evolution !";
-        yield return new WaitForSeconds(3f);
-        SceneManager.UnloadSceneAsync("Evolution");
-        SceneManager.LoadScene("Menu");
-    }
+
 }

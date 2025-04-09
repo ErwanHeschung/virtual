@@ -1,5 +1,6 @@
-using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 public class FeedCreature : MonoBehaviour
 {
@@ -17,7 +18,6 @@ public class FeedCreature : MonoBehaviour
         {
             currentIndicator = Instantiate(indicatorPrefab, canvas.transform);
             currentIndicator.SetActive(false);
-            //change the text to "Feed"
             TextMeshProUGUI text = currentIndicator.GetComponentInChildren<TextMeshProUGUI>();
             if (text != null)
             {
@@ -37,9 +37,8 @@ public class FeedCreature : MonoBehaviour
         if (currentIndicator != null)
         {
             bool shouldShow = nearestCreature != null &&
-                            PlayerInventory.Instance != null &&
-                            PlayerInventory.Instance.foodCount > 0;
-
+                              PlayerInventory.Instance != null &&
+                              PlayerInventory.Instance.foodCount > 0;
 
             currentIndicator.SetActive(shouldShow);
 
@@ -50,7 +49,7 @@ public class FeedCreature : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && nearestCreature != null)
+        if (Input.GetKeyDown(KeyCode.E) && nearestCreature != null && PlayerInventory.Instance.foodCount > 0)
         {
             TryFeedNearestCreature();
         }
@@ -71,42 +70,65 @@ public class FeedCreature : MonoBehaviour
                 nearest = creature;
             }
         }
-        print("Nearest creature: " + nearest?.name + " at distance: " + nearestDistance);
+
         return nearest;
     }
 
     void TryFeedNearestCreature()
     {
-        CreatureBuilder creatureBuilder = nearestCreature.GetComponent<CreatureBuilder>();
-        if (creatureBuilder == null)
+        CreatureBuilder builder = nearestCreature.GetComponentInParent<CreatureBuilder>();
+        if (builder == null)
         {
             Debug.LogWarning("CreatureBuilder component not found on the nearest creature.");
             return;
         }
+
         if (PlayerInventory.Instance.RemoveFood(1))
         {
-            CreatureDNA dna = creatureBuilder.dna;
+            builder.segmentCount++;
 
-            dna.limbCount++;
-
-            dna.limbs.Add(new LimbGene
-            {
-                positionOffset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)),
-                scale = Vector3.one,
-                amplitude = Random.Range(10f, 40f),
-                frequency = Random.Range(0.5f, 2f),
-                phase = Random.Range(0f, Mathf.PI * 2f)
-            });
-
-
-            foreach (GameObject limb in creatureBuilder.builtLimbs)
-            {
+            foreach (GameObject limb in builder.builtParts)
                 Destroy(limb);
-            }
-            creatureBuilder.builtLimbs.Clear();
-
-            creatureBuilder.Build();
-            Debug.Log(creatureBuilder.dna.limbCount);
+            builder.builtParts.Clear();
+            builder.Build();
         }
+    }
+
+    void AddRandomLegToCreature(BodyPartGene root)
+    {
+        List<BodyPartGene> allParts = FlattenTree(root);
+        BodyPartGene parent = allParts[Random.Range(0, allParts.Count)];
+
+        BodyPartGene newLeg = new BodyPartGene
+        {
+            offset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)),
+            rotation = new Vector3(0, 0, Random.Range(-90f, 90f)),
+            scale = new Vector3(0.2f, 1.2f, 0.2f),
+            jointType = JointType.Hinge,
+            jointStrength = Random.Range(20f, 80f),
+            frequency = Random.Range(0.5f, 2f),
+            amplitude = Random.Range(10f, 40f),
+            phase = Random.Range(0f, Mathf.PI * 2f),
+            children = new List<BodyPartGene>()
+        };
+
+        parent.children.Add(newLeg);
+    }
+
+    List<BodyPartGene> FlattenTree(BodyPartGene root)
+    {
+        List<BodyPartGene> result = new();
+        Queue<BodyPartGene> queue = new();
+        queue.Enqueue(root);
+
+        while (queue.Count > 0)
+        {
+            var current = queue.Dequeue();
+            result.Add(current);
+            foreach (var child in current.children)
+                queue.Enqueue(child);
+        }
+
+        return result;
     }
 }

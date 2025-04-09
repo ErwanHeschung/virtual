@@ -13,6 +13,7 @@ public class FitnessTracker : MonoBehaviour
     void Update()
     {
         fitness = Vector3.Distance(startPos, transform.position);
+
     }
 
     public float GetFitness()
