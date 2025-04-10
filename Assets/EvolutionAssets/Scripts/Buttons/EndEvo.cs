@@ -63,6 +63,7 @@ public class EndEvo : MonoBehaviour
     void EndSimulation()
     {
         SceneManager.UnloadSceneAsync("Evolution");
+        AchievementTracker.Instance.CompleteAchievement("Evolution");
         SceneManager.LoadScene("Menu");
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,10 +9,13 @@ public class MenuController : MonoBehaviour
     public GameObject UI;
     public string targetScene;
     public string planetName;
+    public string previousAchievementName;
+    public GameObject planet;
 
     public static string currentScene;
     public static string currentPlanetName;
     public static GameObject currentPlanet;
+
 
     private RocketBehavior rocketBehavior;
     private MissionPanelBehavior missionPanelBehavior;
@@ -21,6 +25,35 @@ public class MenuController : MonoBehaviour
     {
         rocketBehavior = rocket.GetComponent<RocketBehavior>();
         missionPanelBehavior = UI.GetComponent<MissionPanelBehavior>();
+    }
+
+    private void Update()
+    {
+
+        if (!isValidAchievement())
+        {
+            return;
+        }
+
+        if (!AchievementTracker.Instance.GetType().GetField(previousAchievementName).GetValue(AchievementTracker.Instance).Equals(true))
+        {
+            foreach (Renderer r in planet.GetComponentsInChildren<Renderer>())
+            {
+                Material[] mats = r.materials;
+                for (int i = 0; i < mats.Length; i++)
+                {
+                    mats[i].color = Color.black;
+                }
+                r.materials = mats;
+            }
+        }
+
+    }
+
+    private Boolean isValidAchievement()
+    {
+        return !(AchievementTracker.Instance == null || planet == null || string.IsNullOrEmpty(previousAchievementName));
+
     }
 
     private Vector3 GetTopOfPlanet()
@@ -33,8 +66,14 @@ public class MenuController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (IsPointerOverUIElement())
-            return;
+        if (!string.IsNullOrEmpty(previousAchievementName))
+        {
+            Debug.Log("Mouse Down on: " + AchievementTracker.Instance.GetType().GetField(previousAchievementName).GetValue(AchievementTracker.Instance).Equals(true));
+            if (IsPointerOverUIElement() ||
+            !AchievementTracker.Instance.GetType().GetField(previousAchievementName).GetValue(AchievementTracker.Instance).Equals(true))
+                return;
+        }
+
 
         currentPlanet = gameObject;
         currentScene = targetScene;
