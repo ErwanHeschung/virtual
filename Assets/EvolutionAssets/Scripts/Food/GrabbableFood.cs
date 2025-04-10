@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class GrabbableFood : MonoBehaviour
 {
     public GameObject indicator;
+    public TextMeshProUGUI text;
     public float grabRange = 3f;
 
     private Transform player;
@@ -13,6 +15,8 @@ public class GrabbableFood : MonoBehaviour
         {
             indicator.SetActive(false);
         }
+        TextMeshProUGUI text = indicator.GetComponentInChildren<TextMeshProUGUI>();
+        text.text = "Press 'E' to Grab Food";
 
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
