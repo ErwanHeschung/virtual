@@ -60,7 +60,11 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.5f * playerHeight + 0.2f);
+<<<<<<< Updated upstream:Assets/MuseumAssets/MuseumScripts/PlayerMovement.cs
         MyInput();
+=======
+        MyInput();   
+>>>>>>> Stashed changes:Assets/MuseumAssets/MuseumScripts/Movement.cs
         if (isGrounded)
         {
             rb.drag = groundDrag;
@@ -90,7 +94,6 @@ public class PlayerMovement : MonoBehaviour
     private void jump()
     {
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        Debug.Log("called");
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
