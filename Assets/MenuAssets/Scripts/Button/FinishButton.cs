@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FinishButton : MonoBehaviour
@@ -30,6 +31,8 @@ public class FinishButton : MonoBehaviour
 
     public void OnFinishButtonClick()
     {
+        Debug.Log("Finish button clicked!");
+        SceneManager.LoadScene("End");
 
     }
 }
