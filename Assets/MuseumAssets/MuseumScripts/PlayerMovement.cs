@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -60,11 +56,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.5f * playerHeight + 0.2f);
-<<<<<<< Updated upstream:Assets/MuseumAssets/MuseumScripts/PlayerMovement.cs
         MyInput();
-=======
-        MyInput();   
->>>>>>> Stashed changes:Assets/MuseumAssets/MuseumScripts/Movement.cs
         if (isGrounded)
         {
             rb.drag = groundDrag;

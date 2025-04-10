@@ -5,4 +5,5 @@ using UnityEngine;
 public class CreatureDNA : ScriptableObject
 {
     public BodyPartGene root;
+    public NeuralNetwork brain;
 }

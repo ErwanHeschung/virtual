@@ -39,14 +39,18 @@ public class EvolutionManager : MonoBehaviour
 
         foreach (CreatureDNA dna in currentGeneration)
         {
+
             GameObject creature = new GameObject("Creature");
+            creature.tag = "Creature";
+            creature.AddComponent<Rigidbody>();
             creature.transform.position = new Vector3(Random.Range(-80, 80), 5, Random.Range(-80, 80));
 
             var builder = creature.AddComponent<CreatureBuilder>();
             builder.limbPrefab = limbPrefab;
             builder.dna = dna;
             builder.Build();
-
+            NeuralController controller = creature.AddComponent<NeuralController>();
+            controller.creatureDNA = dna;
             population.Add(creature);
         }
 
@@ -55,11 +59,18 @@ public class EvolutionManager : MonoBehaviour
     public void nextGen()
     {
         var fitnessResults = population
-            .Select(c => new
+            .Select(c =>
             {
-                obj = c,
-                dna = c.GetComponent<CreatureBuilder>().dna,
-                fitness = c.GetComponent<CreatureBuilder>().bestFitness
+                CreatureDNA dna = c.GetComponent<CreatureBuilder>().dna;
+                FitnessTracker tracker = c.GetComponentInChildren<FitnessTracker>();
+                float fit = (tracker != null) ? tracker.fitness : 0f;
+
+                return new
+                {
+                    obj = c,
+                    dna = dna,
+                    fitness = fit
+                };
             })
             .OrderByDescending(x => x.fitness)
             .ToList();
@@ -71,20 +82,19 @@ public class EvolutionManager : MonoBehaviour
         {
             currentGeneration.Add(fitnessResults[i].dna);
         }
-
         while (currentGeneration.Count < populationSize)
         {
-            var parent = fitnessResults[Random.Range(0, 3)].dna;
-            currentGeneration.Add(MutateDNA(parent));
+            int parentPoolSize = Mathf.Max(3, fitnessResults.Count / 2);
+            var parentDNA = fitnessResults[Random.Range(0, parentPoolSize)].dna;
+            currentGeneration.Add(MutateDNA(parentDNA));
         }
-
         foreach (var c in population)
+        {
             Destroy(c);
+        }
         population.Clear();
-
         RunEvolution();
     }
-
     CreatureDNA RandomDNA()
     {
         CreatureDNA dna = ScriptableObject.CreateInstance<CreatureDNA>();
@@ -150,7 +160,9 @@ public class EvolutionManager : MonoBehaviour
     CreatureDNA MutateDNA(CreatureDNA parent)
     {
         CreatureDNA child = ScriptableObject.CreateInstance<CreatureDNA>();
-        child.root = CloneAndMutatePart(parent.root);
+        child.root = MutateOrAddNew(parent.root);
+        child.brain = parent.brain.CloneAndMutate();
+
         return child;
     }
 
@@ -175,5 +187,50 @@ public class EvolutionManager : MonoBehaviour
         }
 
         return mutated;
+    }
+
+    BodyPartGene MutateOrAddNew(BodyPartGene original)
+    {
+        BodyPartGene mutated = new BodyPartGene
+        {
+            offset = original.offset + new Vector3(Random.Range(-0.2f, 0.2f), 0, Random.Range(-0.2f, 0.2f)),
+            rotation = original.rotation,
+            scale = original.scale,
+            jointType = Random.value < 0.1f ? RandomJointType() : original.jointType,
+            jointStrength = Mathf.Clamp(original.jointStrength + Random.Range(-10f, 10f), 10f, 100f),
+            frequency = Mathf.Clamp(original.frequency + Random.Range(-0.3f, 0.3f), 0.1f, 3f),
+            amplitude = Mathf.Clamp(original.amplitude + Random.Range(-5f, 5f), 5f, 50f),
+            phase = original.phase + Random.Range(-0.5f, 0.5f),
+            children = new List<BodyPartGene>()
+        };
+
+        foreach (var child in original.children)
+        {
+            mutated.children.Add(MutateOrAddNew(child));
+        }
+
+        if (Random.value < 0.5f)
+        {
+            Debug.Log("Adding new limb");
+            mutated.children.Add(CreateRandomLimb());
+        }
+
+        return mutated;
+    }
+
+    BodyPartGene CreateRandomLimb()
+    {
+        return new BodyPartGene
+        {
+            offset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)),
+            rotation = new Vector3(0, 0, Random.Range(-90f, 90f)),
+            scale = new Vector3(0.2f, 1.2f, 0.2f),
+            jointType = JointType.Hinge,
+            jointStrength = Random.Range(20f, 80f),
+            frequency = Random.Range(0.5f, 2f),
+            amplitude = Random.Range(10f, 40f),
+            phase = Random.Range(0f, Mathf.PI * 2f),
+            children = new List<BodyPartGene>()
+        };
     }
 }

@@ -7150,7 +7150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   limbPrefab: {fileID: 5385760919701398330, guid: e32b2ced3701f2e47b5887c8c9d0f05d,
     type: 3}
-  populationSize: 100
+  populationSize: 10
   currentGeneration: []
   bestFitness: 0
 --- !u!1001 &1029889725

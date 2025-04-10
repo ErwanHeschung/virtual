@@ -62,8 +62,15 @@ public class EndEvo : MonoBehaviour
 
     void EndSimulation()
     {
-        SceneManager.UnloadSceneAsync("Evolution");
-        AchievementTracker.Instance.CompleteAchievement("Evolution");
+        try
+        {
+            AchievementTracker.Instance.CompleteAchievement("Evolution");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("AchievementTracker not found: " + e.Message);
+        }
+
         SceneManager.LoadScene("Menu");
     }
 
