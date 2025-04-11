@@ -6,13 +6,25 @@ public class FeedCreature : MonoBehaviour
 {
     public float feedRange = 3f;
     public GameObject indicatorPrefab;
-
     private GameObject currentIndicator;
     private GameObject nearestCreature;
     private Canvas canvas;
+    public int colectedData = 0;
+
+    public static FeedCreature Instance { get; private set; }
 
     void Start()
     {
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         canvas = FindObjectOfType<Canvas>();
         if (indicatorPrefab != null && canvas != null)
         {
@@ -33,15 +45,12 @@ public class FeedCreature : MonoBehaviour
     void Update()
     {
         nearestCreature = FindNearestFeedableCreature();
-
         if (currentIndicator != null)
         {
             bool shouldShow = nearestCreature != null &&
                               PlayerInventory.Instance != null &&
                               PlayerInventory.Instance.foodCount > 0;
-
             currentIndicator.SetActive(shouldShow);
-
             if (shouldShow)
             {
                 Vector3 screenPos = Camera.main.WorldToScreenPoint(nearestCreature.transform.position);
@@ -59,7 +68,6 @@ public class FeedCreature : MonoBehaviour
     {
         float nearestDistance = feedRange;
         GameObject[] creatures = GameObject.FindGameObjectsWithTag("Creature");
-
         GameObject nearest = null;
         foreach (GameObject creature in creatures)
         {
@@ -70,7 +78,6 @@ public class FeedCreature : MonoBehaviour
                 nearest = creature;
             }
         }
-
         return nearest;
     }
 
@@ -85,20 +92,53 @@ public class FeedCreature : MonoBehaviour
 
         if (PlayerInventory.Instance.RemoveFood(1))
         {
-            builder.segmentCount++;
-
-            foreach (GameObject limb in builder.builtParts)
-                Destroy(limb);
-            builder.builtParts.Clear();
-            builder.Build();
+            colectedData++;
+            if (builder.useSnakeBuilder)
+            {
+                if (builder.dna != null)
+                {
+                    builder.dna.feedBoost++;
+                    Debug.Log("Snake feed boost increased! It will translate to additional segments next generation.");
+                }
+            }
+            else if (builder.useFlyingBuilder)
+            {
+                FlightController fc = builder.GetComponentInChildren<FlightController>();
+                if (fc != null)
+                {
+                    fc.liftForce += 5f;
+                    Debug.Log("Flying creature fed: lift force increased!");
+                }
+                else
+                {
+                    Debug.LogWarning("FlightController component missing in flying creature.");
+                }
+            }
+            else
+            {
+                if (builder.dna != null && builder.dna.root != null)
+                {
+                    AddRandomLegToCreature(builder.dna.root);
+                    Debug.Log("DNA creature fed: a new leg has been added to its DNA for next generation.");
+                }
+                else
+                {
+                    Debug.LogWarning("CreatureDNA or its root is missing in the CreatureBuilder.");
+                }
+            }
         }
     }
 
     void AddRandomLegToCreature(BodyPartGene root)
     {
         List<BodyPartGene> allParts = FlattenTree(root);
-        BodyPartGene parent = allParts[Random.Range(0, allParts.Count)];
+        if (allParts.Count == 0)
+        {
+            Debug.LogWarning("No body parts found in the DNA tree.");
+            return;
+        }
 
+        BodyPartGene parent = allParts[Random.Range(0, allParts.Count)];
         BodyPartGene newLeg = new BodyPartGene
         {
             offset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)),
@@ -111,24 +151,23 @@ public class FeedCreature : MonoBehaviour
             phase = Random.Range(0f, Mathf.PI * 2f),
             children = new List<BodyPartGene>()
         };
-
         parent.children.Add(newLeg);
     }
 
     List<BodyPartGene> FlattenTree(BodyPartGene root)
     {
-        List<BodyPartGene> result = new();
-        Queue<BodyPartGene> queue = new();
+        List<BodyPartGene> result = new List<BodyPartGene>();
+        Queue<BodyPartGene> queue = new Queue<BodyPartGene>();
         queue.Enqueue(root);
-
         while (queue.Count > 0)
         {
             var current = queue.Dequeue();
             result.Add(current);
             foreach (var child in current.children)
+            {
                 queue.Enqueue(child);
+            }
         }
-
         return result;
     }
 }

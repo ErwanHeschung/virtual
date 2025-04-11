@@ -11,7 +11,6 @@ public class NeuralController : MonoBehaviour
     {
         if (creatureDNA == null)
         {
-            Debug.LogError("CreatureDNA is not assigned on " + gameObject.name);
             return;
         }
 
@@ -49,7 +48,7 @@ public class NeuralController : MonoBehaviour
     {
         if (brain == null)
         {
-            Debug.LogError("Brain is null in Update!");
+            Debug.LogWarning("Brain is null in Update!");
             return;
         }
         float[] inputs = GatherInputs();
@@ -92,7 +91,7 @@ public class NeuralController : MonoBehaviour
         if (rb != null && outputs.Length >= 3)
         {
 
-            float forceMultiplier = 300f;
+            float forceMultiplier = 200f;
 
             Vector3 force = new Vector3(outputs[0], outputs[1], outputs[2]) * forceMultiplier;
             rb.AddForce(force);

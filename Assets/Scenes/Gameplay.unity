@@ -36491,10 +36491,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4123a7816d9b1ec4683c65cddd04394b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 20
   maxSpeed: 100
   reverseSpeed: 15
-  acceleration: 50
+  acceleration: 10
   deceleration: 25
   brakeForce: 30
   height: 5

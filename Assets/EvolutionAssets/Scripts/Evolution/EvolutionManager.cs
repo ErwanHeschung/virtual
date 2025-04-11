@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class EvolutionManager : MonoBehaviour
 {
-    public static EvolutionManager Instance { get; private set; }  // Singleton instance to get it from buttons
+    public static EvolutionManager Instance { get; private set; }
     public GameObject limbPrefab;
     public int populationSize = 10;
     public List<CreatureDNA> currentGeneration = new List<CreatureDNA>();
     private List<GameObject> population = new List<GameObject>();
     public float bestFitness = 0f;
+    public int evolutionStage = 0;
 
     void Awake()
     {
@@ -31,62 +32,124 @@ public class EvolutionManager : MonoBehaviour
 
     void RunEvolution()
     {
+        // Divide population equally among three creature types.
+        int baseCount = populationSize / 3;
+        int remainder = populationSize % 3;
+        int snakeCount = baseCount;
+        int dnaCount = baseCount;
+        int flyingCount = baseCount;
+        // Distribute any remainder items (if populationSize is not a multiple of 3)
+        if (remainder > 0) { snakeCount++; remainder--; }
+        if (remainder > 0) { dnaCount++; remainder--; }
+        if (remainder > 0) { flyingCount++; remainder--; }
+
+        // Generate required DNA for DNA creatures.
         currentGeneration.Clear();
-
-        for (int i = 0; i < populationSize; i++)
-            currentGeneration.Add(RandomDNA());
-
-
-        foreach (CreatureDNA dna in currentGeneration)
+        for (int i = 0; i < dnaCount; i++)
         {
+            currentGeneration.Add(RandomDNA(false)); // normal (non-flying) DNA
+        }
+        population.Clear();
 
-            GameObject creature = new GameObject("Creature");
-            creature.tag = "Creature";
-            creature.AddComponent<Rigidbody>();
+        // --- Create Snake Creatures ---
+        for (int i = 0; i < snakeCount; i++)
+        {
+            GameObject creature = new GameObject("Creature_Snake_" + i);
+            creature.AddComponent<Rigidbody>().mass = 1f;
             creature.transform.position = new Vector3(Random.Range(-80, 80), 5, Random.Range(-80, 80));
-
-            var builder = creature.AddComponent<CreatureBuilder>();
+            CreatureBuilder builder = creature.AddComponent<CreatureBuilder>();
             builder.limbPrefab = limbPrefab;
-            builder.dna = dna;
+            builder.useSnakeBuilder = true;
+            builder.useFlyingBuilder = false;
+            builder.dna = null;
             builder.Build();
-            NeuralController controller = creature.AddComponent<NeuralController>();
-            controller.creatureDNA = dna;
+            creature.AddComponent<NeuralController>();
             population.Add(creature);
         }
 
+        // --- Create DNA Creatures ---
+        for (int i = 0; i < dnaCount; i++)
+        {
+            GameObject creature = new GameObject("Creature_DNA_" + i);
+            creature.AddComponent<Rigidbody>().mass = 1f;
+            creature.transform.position = new Vector3(Random.Range(-80, 80), 5, Random.Range(-80, 80));
+            CreatureBuilder builder = creature.AddComponent<CreatureBuilder>();
+            builder.limbPrefab = limbPrefab;
+            builder.useSnakeBuilder = false;
+            builder.useFlyingBuilder = false;
+            builder.dna = currentGeneration[i];
+            builder.Build();
+            creature.AddComponent<NeuralController>();
+            population.Add(creature);
+        }
+
+        // --- Create Flying Creatures ---
+        for (int i = 0; i < flyingCount; i++)
+        {
+            GameObject creature = new GameObject("Creature_Flying_" + i);
+            creature.AddComponent<Rigidbody>().mass = 1f;
+            creature.transform.position = new Vector3(Random.Range(-80, 80), 5, Random.Range(-80, 80));
+            CreatureBuilder builder = creature.AddComponent<CreatureBuilder>();
+            builder.limbPrefab = limbPrefab;
+            builder.useSnakeBuilder = false;
+            builder.useFlyingBuilder = true;
+            builder.dna = RandomDNA(true);
+            builder.dna.isFlying = true; // Ensure the DNA is marked as flying
+            builder.Build();
+            creature.AddComponent<NeuralController>();
+            population.Add(creature);
+        }
     }
 
     public void nextGen()
     {
+        evolutionStage++;
         var fitnessResults = population
             .Select(c =>
             {
-                CreatureDNA dna = c.GetComponent<CreatureBuilder>().dna;
+                CreatureBuilder builder = c.GetComponent<CreatureBuilder>();
+                CreatureDNA dna = builder.dna;
+                // For flying creatures, if they have no DNA, assign new flying DNA.
+                if (builder.useFlyingBuilder && dna == null)
+                {
+                    dna = RandomDNA(true);
+                    builder.dna = dna;
+                }
                 FitnessTracker tracker = c.GetComponentInChildren<FitnessTracker>();
                 float fit = (tracker != null) ? tracker.fitness : 0f;
-
-                return new
-                {
-                    obj = c,
-                    dna = dna,
-                    fitness = fit
-                };
+                return new { obj = c, dna = dna, fitness = fit };
             })
+            .Where(x => x.dna != null)  // Only include creatures with valid DNA.
             .OrderByDescending(x => x.fitness)
             .ToList();
+
+        if (fitnessResults.Count == 0)
+        {
+            Debug.LogWarning("No creatures with valid DNA were found!");
+            return;
+        }
 
         Debug.Log($"Best fitness: {fitnessResults[0].fitness:F2}");
         bestFitness = fitnessResults[0].fitness;
         currentGeneration.Clear();
-        for (int i = 0; i < 5; i++)
+        // Use the top 5 creatures’ DNA to seed the next generation.
+        for (int i = 0; i < Mathf.Min(5, fitnessResults.Count); i++)
         {
             currentGeneration.Add(fitnessResults[i].dna);
         }
+
         while (currentGeneration.Count < populationSize)
         {
             int parentPoolSize = Mathf.Max(3, fitnessResults.Count / 2);
             var parentDNA = fitnessResults[Random.Range(0, parentPoolSize)].dna;
-            currentGeneration.Add(MutateDNA(parentDNA));
+            if (parentDNA.isFlying)
+            {
+                currentGeneration.Add(RandomDNA(true));
+            }
+            else
+            {
+                currentGeneration.Add(MutateDNA(parentDNA));
+            }
         }
         foreach (var c in population)
         {
@@ -95,9 +158,11 @@ public class EvolutionManager : MonoBehaviour
         population.Clear();
         RunEvolution();
     }
-    CreatureDNA RandomDNA()
+
+    CreatureDNA RandomDNA(bool isFlying)
     {
         CreatureDNA dna = ScriptableObject.CreateInstance<CreatureDNA>();
+        dna.isFlying = isFlying;
 
         var root = new BodyPartGene
         {
@@ -111,16 +176,16 @@ public class EvolutionManager : MonoBehaviour
             phase = 0,
             children = new List<BodyPartGene>()
         };
-
-        for (int i = 0; i < 4; i++)
+        if (!isFlying)
         {
-            float x = 1.0f;
-            float z = -1.5f + i * 1.0f;
-
-            root.children.Add(RandomLeg(new Vector3(-x, 0, z), 45, i));
-            root.children.Add(RandomLeg(new Vector3(x, 0, z), -45, i));
+            for (int i = 0; i < 4; i++)
+            {
+                float x = 1.0f;
+                float z = -1.5f + i * 1.0f;
+                root.children.Add(RandomLeg(new Vector3(-x, 0, z), 45, i));
+                root.children.Add(RandomLeg(new Vector3(x, 0, z), -45, i));
+            }
         }
-
         dna.root = root;
         return dna;
     }
@@ -138,17 +203,18 @@ public class EvolutionManager : MonoBehaviour
             amplitude = Random.Range(15f, 40f),
             phase = index * Mathf.PI / 2f,
             children = new List<BodyPartGene> {
-            new BodyPartGene { // Second leg segment
-                offset = new Vector3(0, -1.2f, 0),
-                rotation = new Vector3(0, 0, 20),
-                scale = new Vector3(0.15f, 1.2f, 0.15f),
-                jointType = JointType.Hinge,
-                jointStrength = Random.Range(20f, 80f),
-                frequency = Random.Range(1f, 3f),
-                amplitude = Random.Range(10f, 30f),
-                phase = index * Mathf.PI / 2f + 0.5f
+                new BodyPartGene
+                { // Second leg segment
+                    offset = new Vector3(0, -1.2f, 0),
+                    rotation = new Vector3(0, 0, 20),
+                    scale = new Vector3(0.15f, 1.2f, 0.15f),
+                    jointType = JointType.Hinge,
+                    jointStrength = Random.Range(20f, 80f),
+                    frequency = Random.Range(1f, 3f),
+                    amplitude = Random.Range(10f, 30f),
+                    phase = index * Mathf.PI / 2f + 0.5f
+                }
             }
-        }
         };
     }
 
@@ -159,10 +225,27 @@ public class EvolutionManager : MonoBehaviour
 
     CreatureDNA MutateDNA(CreatureDNA parent)
     {
+        if (parent.isFlying)
+        {
+            return RandomDNA(true);
+        }
+
+        if (parent.brain == null)
+        {
+            parent.brain = new NeuralNetwork();
+            parent.brain.Initialize();
+        }
+
         CreatureDNA child = ScriptableObject.CreateInstance<CreatureDNA>();
         child.root = MutateOrAddNew(parent.root);
         child.brain = parent.brain.CloneAndMutate();
 
+        for (int i = 0; i < parent.feedBoost; i++)
+        {
+            child.root.children.Add(CreateRandomLimb());
+        }
+        child.feedBoost = 0;
+        child.isFlying = false;
         return child;
     }
 
@@ -180,12 +263,10 @@ public class EvolutionManager : MonoBehaviour
             phase = original.phase + Random.Range(-0.5f, 0.5f),
             children = new List<BodyPartGene>()
         };
-
         foreach (var child in original.children)
         {
             mutated.children.Add(CloneAndMutatePart(child));
         }
-
         return mutated;
     }
 
@@ -203,18 +284,15 @@ public class EvolutionManager : MonoBehaviour
             phase = original.phase + Random.Range(-0.5f, 0.5f),
             children = new List<BodyPartGene>()
         };
-
         foreach (var child in original.children)
         {
             mutated.children.Add(MutateOrAddNew(child));
         }
-
         if (Random.value < 0.5f)
         {
             Debug.Log("Adding new limb");
             mutated.children.Add(CreateRandomLimb());
         }
-
         return mutated;
     }
 
