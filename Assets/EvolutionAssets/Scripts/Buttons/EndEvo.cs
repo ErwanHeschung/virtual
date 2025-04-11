@@ -43,13 +43,21 @@ public class EndEvo : MonoBehaviour
             currentIndicator.SetActive(true);
             Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
             currentIndicator.transform.position = screenPos;
+            TextMeshProUGUI text = currentIndicator.GetComponentInChildren<TextMeshProUGUI>();
+            if (FeedCreature.Instance.colectedData < 30)
+            {
+                text.text = "You need to collect 30 data points to end the simulation";
+            }
+            else
+            {
+                text.text = "Press 'E' to end the simulation";
+            }
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && FeedCreature.Instance.colectedData >= 30)
             {
                 animator.SetTrigger("PressButton");
                 isSimulationRunning = false;
                 congratsText.text = endText;
-                //wait for 3 seconds
                 Invoke("EndSimulation", 3f);
 
             }

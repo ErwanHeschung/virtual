@@ -907,7 +907,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Annuler
+  m_text: Cancel
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 75534e52174515a40ad277232798b829, type: 2}
   m_sharedMaterial: {fileID: -1797675325336011225, guid: 75534e52174515a40ad277232798b829,
@@ -1925,7 +1925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Museum: 1
   Race: 1
-  Evolution: 1
+  Evolution: 0
 --- !u!4 &1300836099
 Transform:
   m_ObjectHideFlags: 0
@@ -2286,7 +2286,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Voyager '
+  m_text: Travel
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 75534e52174515a40ad277232798b829, type: 2}
   m_sharedMaterial: {fileID: -1797675325336011225, guid: 75534e52174515a40ad277232798b829,

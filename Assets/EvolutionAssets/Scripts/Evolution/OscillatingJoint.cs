@@ -27,8 +27,8 @@ public class OscillatingJoint : MonoBehaviour
         if (hinge)
         {
             JointMotor motor = hinge.motor;
-            motor.force = gene.jointStrength * 2f;
-            motor.targetVelocity = signal * 2f;
+            motor.force = gene.jointStrength;
+            motor.targetVelocity = signal;
             hinge.motor = motor;
             hinge.useMotor = true;
         }
