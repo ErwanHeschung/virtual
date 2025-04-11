@@ -5,7 +5,7 @@ using UnityEngine;
 public class RaceStartController : MonoBehaviour
 {
     public SpaceshipMovement playerController;
-    public RCC_AICarController[] AIShips;
+    public SpaceshipAIController[] AIShips;
     public TextMeshProUGUI timerText;
     public Camera mainCamera; // The main camera of the car
     public Camera initialCamera; // The initial camera
@@ -24,7 +24,6 @@ public class RaceStartController : MonoBehaviour
         foreach (var ai in AIShips)
         {
             ai.enabled = false;
-            ai.maximumSpeed = 1000;
             // Set maximum speed to 0 to prevent movement
         }
 
@@ -38,7 +37,6 @@ public class RaceStartController : MonoBehaviour
     {
         if (!countdownStarted && Vector3.Distance(playerController.transform.position, startObject.transform.position) <= interactionRange)
         {
-            Debug.Log("Player is within interaction range of the start object.");
             if (Input.GetKeyDown(KeyCode.R)) // Use 'R' key to start the countdown and make characters disappear
             {
                 Debug.Log("'R' key pressed. Starting the countdown and making characters disappear.");

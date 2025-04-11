@@ -47,7 +47,7 @@ public class SpaceshipMovement : MonoBehaviour
         float moveForward = Input.GetAxis("Vertical");  // Forward and backward (W/S or Up/Down arrow)
         float moveSide = Input.GetAxis("Horizontal");   // Left and right (A/D or Left/Right arrow)
 
-        Debug.Log("Move Forward: " + moveForward + ", Move Side: " + moveSide);
+        //Debug.Log("Move Forward: " + moveForward + ", Move Side: " + moveSide);
 
         // Determine whether the ship should accelerate or decelerate
         if (moveForward > 0)  // Moving forward
