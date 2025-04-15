@@ -21,6 +21,10 @@ Feed the creatures with apples (you can find it in the trees). After feeding 30 
 ### End 
 A new button will be displayed after completing each planet, by pressing it, the end scene will appear
 
+### Notes
+
+If you want to avoid completing all planets at once, you can just check the achievement you want in the script of AchievementManager in menu scene
+
 ## Resources
 
 ### Princess
@@ -38,12 +42,14 @@ https://youtu.be/VTBuEPu4YMk?list=PLfP6i5T0-DkLrHqanmCrOs28G-WDHgZzN
 
 ## Menu
 
+### Took from the internet 
+
 - Menu song : https://breakingcopyright.com/song/arthur-vyncke-a-few-jumps-away
 - rocket : https://www.turbosquid.com/3d-models/rocket-cartoon-2065520
 
 
 ### Made by ourselves
-- All Planets
+- All Planets/Scripts
 
 
 ## Museum
