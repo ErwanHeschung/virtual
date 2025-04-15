@@ -9,7 +9,7 @@ public class CreatureBuilder : MonoBehaviour
 
     [Header("Build Mode Options")]
     public bool useSnakeBuilder = true;
-    public bool useFlyingBuilder = false; // NEW: Flag for flying creature
+    public bool useFlyingBuilder = false;
 
     [Header("Snake Builder Options")]
     public int segmentCount = 10;
@@ -28,14 +28,12 @@ public class CreatureBuilder : MonoBehaviour
 
     public void Build()
     {
-        // Clear any existing parts.
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
         builtParts.Clear();
 
-        // Select which build mode to use.
         if (useFlyingBuilder)
         {
             BuildFlyingCreature();
@@ -57,7 +55,6 @@ public class CreatureBuilder : MonoBehaviour
 
     public void BuildSnake()
     {
-        // Make sure to clear any previously built parts.
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
@@ -66,25 +63,22 @@ public class CreatureBuilder : MonoBehaviour
 
         for (int i = 0; i < segmentCount; i++)
         {
-            // Position each segment in a line along the forward direction.
             Vector3 pos = transform.position + transform.forward * i * segmentSpacing;
             GameObject limb = Instantiate(limbPrefab, pos, transform.rotation, transform);
             limb.name = "Limb_" + i;
             limb.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
-            // Set the color (optional).
             Renderer rend = limb.GetComponent<Renderer>();
             if (rend != null)
             {
                 rend.material.color = snakeColor;
             }
 
-            // Ensure the limb has a Rigidbody.
             Rigidbody rb = limb.GetComponent<Rigidbody>();
             if (rb == null)
             {
                 rb = limb.AddComponent<Rigidbody>();
-                rb.mass = 4f;
+                rb.mass = 2f;
                 rb.drag = 0.1f;
                 rb.angularDrag = 0.05f;
                 rb.sleepThreshold = 0;

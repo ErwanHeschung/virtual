@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PointUnlocker : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class PointUnlocker : MonoBehaviour
             currentPoint = 0;
             currentLap++;
             currentLapText.text = currentLap + "/2";
+            if (currentLap == 2)
+                endRace();
         }
         nextPointObject[currentPoint].SetActive(true);
 
@@ -38,5 +41,17 @@ public class PointUnlocker : MonoBehaviour
             foreach (GameObject obj in objectsToDisable)
                 obj.SetActive(false);
         }
+    }
+
+    private void endRace()
+    {
+        Invoke("LoadMenu", 2f);
+    }
+
+    private void LoadMenu()
+    {
+        AchievementTracker.Instance.CompleteAchievement("Race");
+        SceneManager.LoadScene("Menu");
+
     }
 }

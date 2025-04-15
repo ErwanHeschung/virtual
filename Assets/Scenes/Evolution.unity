@@ -980,6 +980,7 @@ MonoBehaviour:
   feedRange: 10
   indicatorPrefab: {fileID: 8534267226360346820, guid: fc599a81a90f8184784f44ab5a9ec26b,
     type: 3}
+  colectedData: 0
 --- !u!1 &386784359
 GameObject:
   m_ObjectHideFlags: 0
@@ -14100,6 +14101,7 @@ GameObject:
   - component: {fileID: 1391501848}
   - component: {fileID: 1391501847}
   - component: {fileID: 1391501851}
+  - component: {fileID: 1391501852}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -14212,6 +14214,19 @@ MonoBehaviour:
   currentFitnessText: {fileID: 777828447}
   congratsText: {fileID: 2141596395}
   evolutionStageText: {fileID: 1369178170}
+--- !u!114 &1391501852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391501846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc3e195f9e75e942acb23e8184f74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  progressBar: {fileID: 901982929}
 --- !u!64 &1392499286
 MeshCollider:
   m_ObjectHideFlags: 0

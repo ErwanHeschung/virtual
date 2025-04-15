@@ -19,22 +19,27 @@ public class DialogueSystem : MonoBehaviour
     void Start()
     {
         canvas = FindObjectOfType<Canvas>();
-
-        currentIndicator = Instantiate(indicatorPrefab, canvas.transform);
-        currentIndicator.SetActive(false);
-        TextMeshProUGUI text = currentIndicator.GetComponentInChildren<TextMeshProUGUI>();
+        if (indicatorPrefab)
+        {
+            currentIndicator = Instantiate(indicatorPrefab, canvas.transform);
+            currentIndicator.SetActive(false);
+            TextMeshProUGUI text = currentIndicator.GetComponentInChildren<TextMeshProUGUI>();
+            text.text = "Press 'E' to Talk";
+        }
         if (dialogueBox != null)
             dialogueBox.SetActive(false);
-        text.text = "Press 'E' to Talk";
     }
 
     void Update()
     {
         if (!inConversation && Vector3.Distance(player.transform.position, guard.transform.position) <= interactionRange)
         {
-            currentIndicator.SetActive(true);
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(guard.transform.position);
-            currentIndicator.transform.position = screenPos;
+            if (currentIndicator)
+            {
+                currentIndicator.SetActive(true);
+                Vector3 screenPos = Camera.main.WorldToScreenPoint(guard.transform.position);
+                currentIndicator.transform.position = screenPos;
+            }
             if (Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("E key pressed. Starting conversation.");
@@ -45,7 +50,7 @@ public class DialogueSystem : MonoBehaviour
         {
             DisplayNextLine();
         }
-        else
+        else if (currentIndicator)
         {
             currentIndicator.SetActive(false);
         }

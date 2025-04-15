@@ -40,7 +40,7 @@ public class OscillatingJoint : MonoBehaviour
         if (IsGrounded())
         {
             Vector3 rawDirection = transform.right;
-            rawDirection.y = 0f; // Remove vertical component
+            rawDirection.y = 0f;
             rawDirection.Normalize();
 
             float wave = Mathf.Sin(Time.time * gene.frequency + gene.phase) * gene.amplitude;

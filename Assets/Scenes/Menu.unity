@@ -1923,8 +1923,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19263ba0bd215c46989928ff7cdb936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Museum: 1
-  Race: 1
+  Museum: 0
+  Race: 0
   Evolution: 0
 --- !u!4 &1300836099
 Transform:

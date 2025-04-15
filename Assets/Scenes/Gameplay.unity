@@ -2831,8 +2831,7 @@ MonoBehaviour:
     abilities. You might not see them until it's too late."
   dialogueText: {fileID: 344205320}
   dialogueBox: {fileID: 968975590}
-  indicatorPrefab: {fileID: 8534267226360346820, guid: fc599a81a90f8184784f44ab5a9ec26b,
-    type: 3}
+  indicatorPrefab: {fileID: 0}
 --- !u!4 &215833945
 Transform:
   m_ObjectHideFlags: 0
@@ -3216,9 +3215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118314d59922dfa4c98f7d55e2b05569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
+  moveSpeed: 50
   rotationSpeed: 2
-  checkpointTolerance: 5
+  checkpointTolerance: 12
   targetAltitude: 5
   waypoints:
   - {fileID: 696686508}
@@ -3306,7 +3305,7 @@ BoxCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 11.627731, y: 10, z: 10.836029}
+  m_Size: {x: 8, y: 10, z: 10.836029}
   m_Center: {x: -1.3322697e-15, y: -0.000000834465, z: 0.00000071525574}
 --- !u!54 &242388080
 Rigidbody:
@@ -13011,6 +13010,135 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.65, z: 0.54}
   m_Center: {x: 0, y: 0.71, z: 0}
+--- !u!1 &656984107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 656984109}
+  - component: {fileID: 656984108}
+  m_Layer: 0
+  m_Name: "\U0001F30C Ambient & Space (Royalty Free Music) - UNDER THE STARS by Rexlambo
+    \U0001F1F7\U0001F1FA"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &656984108
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656984107}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b301988019006fa4c9bfb83ada621b7c, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &656984109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656984107}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &658642213
 GameObject:
   m_ObjectHideFlags: 0
@@ -15321,6 +15449,51 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.65, z: 0.54}
   m_Center: {x: 0, y: 0.71, z: 0}
+--- !u!1 &813199008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 813199009}
+  - component: {fileID: 813199010}
+  m_Layer: 0
+  m_Name: Waypoint 27
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &813199009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813199008}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.86614, y: 7.2086143, z: -128.7228}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1535795713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &813199010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813199008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3400764109dcd448bc0bc3fa3b11ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetSpeed: 100
 --- !u!1 &816140478
 GameObject:
   m_ObjectHideFlags: 0
@@ -36186,7 +36359,7 @@ PrefabInstance:
     - target: {fileID: 5417604327655588935, guid: 81ddaef9d4697d84ba75e74a69f45a43,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -139.72
+      value: -140
       objectReference: {fileID: 0}
     - target: {fileID: 5417604327655588935, guid: 81ddaef9d4697d84ba75e74a69f45a43,
         type: 3}
@@ -36492,7 +36665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  maxSpeed: 100
+  maxSpeed: 50
   reverseSpeed: 15
   acceleration: 10
   deceleration: 25
@@ -43347,6 +43520,7 @@ Transform:
   - {fileID: 1266393258}
   - {fileID: 1120298871}
   - {fileID: 76616466}
+  - {fileID: 813199009}
   m_Father: {fileID: 593675038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1535795714
@@ -43389,6 +43563,7 @@ MonoBehaviour:
   - {fileID: 1266393259}
   - {fileID: 1120298872}
   - {fileID: 76616467}
+  - {fileID: 813199010}
 --- !u!1 &1537462612
 GameObject:
   m_ObjectHideFlags: 0
@@ -45257,7 +45432,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 4ef7ba07d9e53204ca8f201db5c71a6d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -129.85
+      value: -131
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4ef7ba07d9e53204ca8f201db5c71a6d,
         type: 3}
@@ -70001,3 +70176,4 @@ SceneRoots:
   - {fileID: 1681715067}
   - {fileID: 1059915563}
   - {fileID: 829918956}
+  - {fileID: 656984109}
