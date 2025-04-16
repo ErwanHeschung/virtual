@@ -4,11 +4,12 @@
 
 - Unity version 2022.3.57f1
 
-- link to .exe and unitypackage : 
+- link to .exe, unitypackage and dependancies : 
     - https://drive.google.com/drive/folders/1ubY7ho_jjvZksP0d0lRBbjwWdI6lgPq5?usp=sharing
 
 - To use unitypackage, create a project with universal 3D (we used URP).
-- To simplify the import, in addition of unitypackage, please copy the folder ProjectSettings and Packages in your unity project to add packages dependancies and tags
+- To simplify the import and ensure all functionnalities,
+ in addition of unitypackage, please copy the folder ProjectSettings and Packages in your unity project to add packages dependencies and tags
 
 
 ## Description
