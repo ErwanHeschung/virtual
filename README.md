@@ -8,6 +8,7 @@
     - https://drive.google.com/drive/folders/1ubY7ho_jjvZksP0d0lRBbjwWdI6lgPq5?usp=sharing
 
 - To use unitypackage, create a project with universal 3D (we used URP).
+- To simplify the import, in addition of unitypackage, please copy the folder ProjectSettings and Packages in your unity project to add packages dependancies and tags
 
 
 ## Description
