@@ -1,5 +1,15 @@
 # Assets 
 
+## Information
+
+- Unity version 2022.3.57f1
+
+- link to .exe and unitypackage : 
+    - https://drive.google.com/drive/folders/1ubY7ho_jjvZksP0d0lRBbjwWdI6lgPq5?usp=sharing
+
+- To use unitypackage, create a project with universal 3D (we used URP).
+
+
 ## Description
 
 ### Planet : Museum 
@@ -28,7 +38,7 @@ If you want to avoid completing all planets at once, you can just check the achi
 ## Resources
 
 ### Princess
- - Princess Mesh : https://sketchfab.com/3d-models/female-character-riged-afecf58fd0894f96a9dfafbb9031a360
+ - Princess Mesh, animated with mixamo : https://sketchfab.com/3d-models/female-character-riged-afecf58fd0894f96a9dfafbb9031a360
 - Animation : https://www.mixamo.com
 
 ### Skybox
@@ -37,39 +47,50 @@ If you want to avoid completing all planets at once, you can just check the achi
 
 ### Sounds 
 
-- background song : 
+- background song, no modifications : 
 https://youtu.be/VTBuEPu4YMk?list=PLfP6i5T0-DkLrHqanmCrOs28G-WDHgZzN
 
 ## Menu
 
 ### Took from the internet 
 
-- Menu song : https://breakingcopyright.com/song/arthur-vyncke-a-few-jumps-away
-- rocket : https://www.turbosquid.com/3d-models/rocket-cartoon-2065520
+- Menu song, no modifications done : https://breakingcopyright.com/song/arthur-vyncke-a-few-jumps-away
+- rocket, no modifications done : https://www.turbosquid.com/3d-models/rocket-cartoon-2065520
 
 
 ### Made by ourselves
-- All Planets/Scripts
+- All Planets/Scripts were made by ourselves 
 
 
 ## Museum
 
 ## Race 
 
+https://assetstore.unity.com/packages/tools/physics/realistic-car-controller-16296?srsltid=AfmBOoqoywj_Bx9QUR-Z9vIEpcFMBYDQApZdX6m2gfaz1_5CrvgNgPy2
+???
+
 ## Evolution
 
 ### Took from the internet 
 
-- Scientist model : https://sketchfab.com/3d-models/rust-scientist-blue-8040c84dc0194e47b9be7f73db6ffdcb 
+- Scientist model, modified with mixamo : https://sketchfab.com/3d-models/rust-scientist-blue-8040c84dc0194e47b9be7f73db6ffdcb 
 
 - rain noises : https://youtu.be/3qzixdG9I5I
 
 ### Made by Ourselves
 
+- Evolution Dome 
+- Moutains 
+- Scripts
+
 inspired from tutorials :
 
-- Sky particles : https://www.youtube.com/watch?v=lrIX0aSxims
-- Procedural evolution : https://github.com/mattatz/EvolvingVirtualCreatures/tree/master/Assets/EvolvingVirtualCreatures/Scripts/GeneticAlgorithm
+- Sky particles (Rain and clouds) : https://www.youtube.com/watch?v=lrIX0aSxims
+- Procedural creature : 
+    - https://github.com/mattatz/EvolvingVirtualCreatures/tree/master/Assets/EvolvingVirtualCreatures/Scripts/GeneticAlgorithm
+    - https://www.karlsims.com/evolved-virtual-creatures.html
+    - https://team.inria.fr/imagine/files/2014/10/sims_siggraph94.pdf
+
 
 
 
