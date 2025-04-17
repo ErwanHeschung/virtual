@@ -65,7 +65,11 @@ https://youtu.be/VTBuEPu4YMk?list=PLfP6i5T0-DkLrHqanmCrOs28G-WDHgZzN
 
 
 ## Museum
-
+- We took the floating platforms from a sketchab model that we then tweaked in order to build the entire museum map :
+  https://sketchfab.com/3d-models/floating-portal-island-diorama-62cade7753204cfc9589fa12a6b8b7df
+- The minimap was inspired from this quick tutorial
+  https://youtu.be/YNbuhDiaXg4?feature=shared
+  
 ## Race 
 
 https://assetstore.unity.com/packages/tools/physics/realistic-car-controller-16296?srsltid=AfmBOoqoywj_Bx9QUR-Z9vIEpcFMBYDQApZdX6m2gfaz1_5CrvgNgPy2
