@@ -7,6 +7,10 @@
 - link to .exe, unitypackage and dependancies : 
     - https://drive.google.com/drive/folders/1ubY7ho_jjvZksP0d0lRBbjwWdI6lgPq5?usp=sharing
 
+- You will find :
+    - a folder "The Little Princess 2" for the .exe
+    - a unity package, project settings and packages if you want to run the project yourself
+
 - To use unitypackage, create a project with universal 3D (we used URP).
 - To simplify the import and ensure all functionnalities,
  in addition of unitypackage, please copy the folder ProjectSettings and Packages in your unity project to add packages dependencies and tags
